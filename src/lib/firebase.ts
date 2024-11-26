@@ -17,12 +17,9 @@ import {
   addDoc,
   updateDoc,
   doc,
-  setDoc,
   serverTimestamp,
   writeBatch,
-  DocumentData,
   getDoc,
-  deleteDoc,
   runTransaction,
   increment
 } from 'firebase/firestore';

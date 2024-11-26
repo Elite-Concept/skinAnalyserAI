@@ -27,7 +27,8 @@ export function useSubscription(userId?: string, planId?: string): UseSubscripti
   console.log(userId, planId)
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [subscription, setSubscription] = useState<Subscription | null>(null);
+  const [subscription] = useState<Subscription | null>(null);
+
 
   
   const subscribe = async (planId: string, userId: string) => {

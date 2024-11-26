@@ -1,4 +1,4 @@
-import { doc, getDoc, runTransaction, increment, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, runTransaction, increment, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 
 export interface AnalysisCredits {

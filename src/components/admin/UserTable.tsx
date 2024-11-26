@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Edit2, MoreVertical, Check, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Edit2, Check, X } from 'lucide-react';
 import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import LoadingSpinner from '../LoadingSpinner';
