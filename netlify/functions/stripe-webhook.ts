@@ -52,9 +52,9 @@ export const handler: Handler = async (event) => {
 
     // Extract userId based on event type and data
     if (isCheckoutSession(stripeEvent.data.object)) {
-      userId = stripeEvent.data.object.client_reference_id;
+      userId = stripeEvent.data.object.client_reference_id || undefined;
     } else if (hasMetadata(stripeEvent.data.object)) {
-      userId = stripeEvent.data.object.metadata?.userId;
+      userId = stripeEvent.data.object.metadata?.userId || undefined;
     }
 
     if (!userId) {
@@ -138,12 +138,18 @@ export const handler: Handler = async (event) => {
 
       case 'invoice.payment_failed': {
         const invoice = stripeEvent.data.object as Stripe.Invoice;
-        
-        await db.collection('subscriptions').doc(userId).set({
-          status: 'past_due',
-          lastPaymentError: invoice.last_payment_error?.message,
-          updatedAt: new Date(),
-        }, { merge: true });
+
+        // Retrieve the PaymentIntent to access the last_payment_error
+        if (invoice.payment_intent) {
+          const paymentIntent = await stripe.paymentIntents.retrieve(invoice.payment_intent as string);
+          const lastPaymentError = paymentIntent.last_payment_error?.message;
+
+          await db.collection('subscriptions').doc(userId).set({
+            status: 'past_due',
+            lastPaymentError: lastPaymentError,
+            updatedAt: new Date(),
+          }, { merge: true });
+        }
         break;
       }
     }
