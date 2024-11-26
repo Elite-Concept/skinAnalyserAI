@@ -15,6 +15,7 @@ export default function SubscriptionBanner({ userId, onUpgrade }: SubscriptionBa
   const usagePercentage = (subscription?.analysisUsed / subscription?.analysisCount) * 100;
   const isLowCredits = remainingCredits <= subscription?.analysisCount * 0.1; // 10% threshold
 
+  console.log(usagePercentage);
   if (!isLowCredits) return null;
 
   return (

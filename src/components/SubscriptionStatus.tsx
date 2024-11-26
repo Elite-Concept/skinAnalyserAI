@@ -1,4 +1,3 @@
-import React from 'react';
 import { AlertCircle, CheckCircle2, Clock } from 'lucide-react';
 import { useSubscription } from '../hooks/useSubscription';
 
@@ -7,9 +6,9 @@ interface SubscriptionStatusProps {
 }
 
 export default function SubscriptionStatus({ userId }: SubscriptionStatusProps) {
-  const { subscription, loading, error, isActive, remainingAnalyses, daysRemaining } = useSubscription(userId);
+  const { subscription, isLoading, error, isActive, remainingAnalyses, daysRemaining } = useSubscription(userId);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="animate-pulse bg-gray-100 rounded-lg p-4">
         <div className="h-4 bg-gray-200 rounded w-3/4"></div>

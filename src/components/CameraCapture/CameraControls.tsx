@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Camera } from 'lucide-react';
 
 interface CameraControlsProps {

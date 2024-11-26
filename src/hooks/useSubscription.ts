@@ -18,13 +18,18 @@ interface UseSubscriptionReturn {
   error: string | null;
   clearError: () => void;
   subscription: Subscription | null;
+  remainingAnalyses: number;
+  isActive: boolean;
+  daysRemaining: number;
 }
 
 export function useSubscription(userId?: string, planId?: string): UseSubscriptionReturn {
+  console.log(userId, planId)
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
 
+  
   const subscribe = async (planId: string, userId: string) => {
     if (!planId || !userId) {
       setError('Missing required subscription information');
@@ -58,11 +63,18 @@ export function useSubscription(userId?: string, planId?: string): UseSubscripti
 
   const clearError = () => setError(null);
 
+  const remainingAnalyses = subscription ? subscription.analysisCount - subscription.analysisUsed : 0;
+  const isActive = subscription ? subscription.status === 'active' : false;
+  const daysRemaining = subscription ? Math.ceil((subscription.currentPeriodEnd.getTime() - Date.now()) / (1000 * 60 * 60 * 24)) : 0;
+
   return {
     subscribe,
     isLoading,
     error,
     clearError,
     subscription,
+    remainingAnalyses,
+    isActive,
+    daysRemaining,
   };
 }

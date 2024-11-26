@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { X, AlertTriangle, Loader2 } from 'lucide-react';
 
 interface DeleteConfirmModalProps {

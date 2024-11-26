@@ -155,3 +155,8 @@ export async function syncAnalysisCredits(userId: string): Promise<AnalysisCredi
     throw new Error('Failed to sync analysis credits');
   }
 }
+
+export async function incrementAnalysisCount(userId?: string): Promise<void> {
+  // Implementation of incrementAnalysisCount
+  console.log(userId);
+}

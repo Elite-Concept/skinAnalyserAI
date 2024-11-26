@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { AlertCircle, RefreshCw } from 'lucide-react';
 
 interface AnalysisErrorProps {

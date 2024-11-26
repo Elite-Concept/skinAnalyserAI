@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState, useEffect } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
 import * as tf from '@tensorflow/tfjs';
 import * as faceDetection from '@tensorflow-models/face-detection';

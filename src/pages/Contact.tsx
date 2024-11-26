@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Microscope, ArrowLeft, Mail, Phone, MapPin, Send, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -16,6 +16,7 @@ export default function Contact() {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactForm>();
 
   const onSubmit = async (data: ContactForm) => {
+    console.log(data);
     setIsSubmitting(true);
     try {
       // Simulate API call

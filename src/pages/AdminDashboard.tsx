@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, Activity, CreditCard, BarChart3, Search, Filter, Download } from 'lucide-react';
+import { Users, Search, Download } from 'lucide-react';
 import UserTable from '../components/admin/UserTable';
 import DashboardStats from '../components/admin/DashboardStats';
 import UserFilters from '../components/admin/UserFilters';

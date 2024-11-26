@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { analyzeSkinImage } from '../../lib/gemini';
 import { AnalysisLoading } from './AnalysisLoading';
 import { AnalysisError } from './AnalysisError';

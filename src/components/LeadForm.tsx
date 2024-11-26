@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
 import { useAnalysisPermissions } from '../hooks/useAnalysisPermissions';
@@ -21,6 +21,8 @@ export interface LeadData {
   name: string;
   email: string;
   phone: string;
+  userId: string;
+  analysisId: string;
 }
 
 export default function LeadForm({ 
@@ -32,7 +34,7 @@ export default function LeadForm({
   permissionsLoading = false
 }: LeadFormProps) {
   const { user } = useAuth();
-  const { canAnalyze, remainingAnalyses, error: permissionError } = useAnalysisPermissions(user?.uid);
+  const { canAnalyze, remainingAnalyses, } = useAnalysisPermissions(user?.uid);
   const [webhookError, setWebhookError] = useState<string | null>(null);
   
   const {

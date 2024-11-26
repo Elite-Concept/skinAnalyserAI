@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { CheckCircle2, AlertCircle } from 'lucide-react';
 import type { AnalysisResult } from './types';
 

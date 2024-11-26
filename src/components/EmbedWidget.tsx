@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CameraCapture from './CameraCapture';
 import { SkinAnalysis } from './SkinAnalysis';
@@ -21,7 +21,7 @@ export default function EmbedWidget() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [analysisId, setAnalysisId] = useState<string | null>(null);
-  const [analysisResults, setAnalysisResults] = useState<AnalysisResult | null>(null);
+  const [analysisResults, setAnalysisResults] = useState<AnalysisResult | undefined>(undefined);
   
   const { isLoading: permissionsLoading } = useAnalysisPermissions(clientId);
 
@@ -169,7 +169,7 @@ export default function EmbedWidget() {
                   setShowCamera(true);
                   setLeadSubmitted(false);
                   setAnalysisId(null);
-                  setAnalysisResults(null);
+                  setAnalysisResults(undefined);
                 }}
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-500"
               >

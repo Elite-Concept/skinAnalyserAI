@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 import { Microscope, ArrowLeft, Users, Code, Shield, Award } from 'lucide-react';
 

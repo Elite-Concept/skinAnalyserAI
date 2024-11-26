@@ -1,6 +1,5 @@
-import React from 'react';
 import { ArrowDown, ArrowUp } from 'lucide-react';
-import type { Lead } from '../../pages/Leads';
+import { Lead } from '../../pages/Leads';
 import LeadStatusBadge from './LeadStatusBadge';
 
 interface LeadsTableProps {
@@ -85,7 +84,7 @@ export default function LeadsTable({
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-500">
-                  {lead.timestamp.toLocaleDateString()}
+                  {lead.timestamp.toDate().toLocaleDateString()}
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">

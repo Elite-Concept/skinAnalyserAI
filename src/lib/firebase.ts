@@ -22,7 +22,9 @@ import {
   writeBatch,
   DocumentData,
   getDoc,
-  deleteDoc
+  deleteDoc,
+  runTransaction,
+  increment
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -86,6 +88,7 @@ export const addLead = async (leadData: {
   email: string;
   phone: string;
   userId: string;
+  analysisId: string;
 }) => {
   try {
     const docRef = await addDoc(collection(db, 'leads'), {
@@ -174,5 +177,37 @@ export const updateUserStatus = async (userId: string, status: 'active' | 'inact
     throw error;
   }
 };
+
+export async function incrementAnalysisCount(userId: string): Promise<void> {
+  try {
+    const subscriptionRef = doc(db, 'subscriptions', userId);
+
+    await runTransaction(db, async (transaction) => {
+      const subscriptionDoc = await transaction.get(subscriptionRef);
+
+      if (!subscriptionDoc.exists()) {
+        throw new Error('No subscription found');
+      }
+
+      const data = subscriptionDoc.data();
+      const currentUsage = data.analysisUsed || 0;
+
+      if (currentUsage >= data.analysisCount) {
+        throw new Error('Insufficient analysis credits');
+      }
+
+      // Update subscription with new usage count
+      transaction.update(subscriptionRef, {
+        analysisUsed: increment(1),
+        lastAnalysisAt: serverTimestamp(),
+        lastSyncedAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+    });
+  } catch (error) {
+    console.error('Error incrementing analysis count:', error);
+    throw new Error('Failed to increment analysis count');
+  }
+}
 
 export { app, auth, db };

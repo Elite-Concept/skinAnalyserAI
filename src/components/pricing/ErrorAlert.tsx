@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { XCircle, X } from 'lucide-react';
 
 interface ErrorAlertProps {

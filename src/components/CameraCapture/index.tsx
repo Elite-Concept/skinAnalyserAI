@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useFaceDetector } from './useFaceDetector';
 import { useWebcam } from './useWebcam';
 import { CameraFrame } from './CameraFrame';

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { plans } from '../../lib/stripe';
 import { Calendar, CreditCard } from 'lucide-react';
 

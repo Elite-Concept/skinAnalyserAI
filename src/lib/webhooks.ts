@@ -1,7 +1,7 @@
 import { doc, getDoc, setDoc, serverTimestamp, collection } from 'firebase/firestore';
 import { db } from './firebase';
 import { z } from 'zod';
-import type { AnalysisResult } from '../components/SkinAnalysis/types';
+// import type { AnalysisResult } from '../components/SkinAnalysis/types';
 
 // Webhook payload schema validation
 const WebhookPayloadSchema = z.object({
@@ -97,24 +97,25 @@ export async function sendWebhook(
       await logWebhookAttempt(userId, true, payload, undefined, response.status, retryCount, requestDuration);
       return true;
     } catch (error) {
-      clearTimeout(timeout);
       const requestDuration = Date.now() - startTime;
+      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
 
       // Handle retries for specific errors
       if (
         retryCount < MAX_RETRIES && 
-        (error.name === 'AbortError' || // Timeout
-         error.message.includes('Failed to fetch') || // Network error
-         (error.message.includes('HTTP error') && 
-          [429, 502, 503, 504].includes(parseInt(error.message.match(/\d+/)?.[0] || '0'))) // Retryable HTTP errors
-        )
+        (error instanceof Error && (
+          error.name === 'AbortError' || // Timeout
+          error.message.includes('Failed to fetch') || // Network error
+          (error.message.includes('HTTP error') && 
+          [429, 502, 503, 504].includes(parseInt(error.message.match(/\d+/)?.[0] || '0')))
+        ))
       ) {
         // Log retry attempt
         await logWebhookAttempt(
           userId, 
           false, 
           payload, 
-          `${error.message} - Retrying (${retryCount + 1}/${MAX_RETRIES})`,
+          `${errorMessage} - Retrying (${retryCount + 1}/${MAX_RETRIES})`,
           undefined,
           retryCount,
           requestDuration
@@ -130,12 +131,12 @@ export async function sendWebhook(
         userId,
         false,
         payload,
-        error.message,
+        errorMessage,
         undefined,
         retryCount,
         requestDuration
       );
-      
+
       // Re-throw error for proper handling
       throw error;
     }

@@ -1,10 +1,9 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 import { 
   Microscope, 
   Code, 
   Lock, 
-  Zap, 
   ArrowRight, 
   CheckCircle2, 
   Sparkles,

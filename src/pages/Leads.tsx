@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Microscope, Users, Search, ArrowLeft, Loader2, Download, Trash2, AlertCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
@@ -7,11 +7,12 @@ import { format } from 'date-fns';
 import { exportLeadsToExcel } from '../utils/excelExport';
 import DeleteConfirmModal from '../components/leads/DeleteConfirmModal';
 
-interface Lead {
+export interface Lead {
   id: string;
   name: string;
   email: string;
   phone: string;
+  status: string;
   timestamp: {
     toDate: () => Date;
   };
