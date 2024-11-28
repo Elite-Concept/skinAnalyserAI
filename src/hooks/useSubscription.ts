@@ -24,7 +24,7 @@ interface UseSubscriptionReturn {
 }
 
 export function useSubscription(userId?: string, planId?: string): UseSubscriptionReturn {
-  console.log("this is use subscription: ")
+  console.log("this is use subscription: ", userId, planId)
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [subscription] = useState<Subscription | null>(null);
