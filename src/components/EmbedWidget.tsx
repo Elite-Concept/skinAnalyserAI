@@ -82,7 +82,7 @@ export default function EmbedWidget() {
   };
 
   const handleLeadSubmit = async (data: LeadData) => {
-    console.log("form data: ", data);
+    console.log( data);
     if (!credits || credits.available <= 0) {
       setError('Insufficient analysis credits');
       return;
