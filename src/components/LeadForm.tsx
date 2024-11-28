@@ -50,16 +50,12 @@ export default function LeadForm({
 
     try {
       setWebhookError(null);
-
       // Add the lead
-      const leadId = await addLead({
-        ...data,
-        userId,
-        analysisId
-      });
+      const leadId = await addLead({...data, userId, analysisId});
 
       // Only proceed if lead was successfully added
       if (leadId) {
+        
         // Deduct credit
         await deductAnalysisCredit(userId, analysisId);
 
@@ -76,10 +72,13 @@ export default function LeadForm({
                 results: analysisResults
               }
             });
-          } catch (webhookError) {
-            console.error('Webhook error:', webhookError);
+    
+          } catch (error) {
+            console.error('Webhook error:', error);
             setWebhookError('Form submitted successfully, but webhook delivery failed');
           }
+        } else {
+          console.log("Still waiting for analysis results...");
         }
 
         onSubmit(data);

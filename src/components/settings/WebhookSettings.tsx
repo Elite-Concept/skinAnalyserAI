@@ -115,7 +115,6 @@ export default function WebhookSettings() {
 
   const testWebhook = async () => {
     if (!webhookUrl || !user) return;
-
     try {
       setIsTesting(true);
       setError(null);
@@ -131,7 +130,6 @@ export default function WebhookSettings() {
           userId: user.uid
         }),
       });
-
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

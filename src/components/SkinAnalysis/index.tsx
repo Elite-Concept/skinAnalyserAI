@@ -18,6 +18,7 @@ export function SkinAnalysis({ imageUrl, userId, onAnalysisComplete }: SkinAnaly
   const [retryCount, setRetryCount] = useState(0);
   const MAX_RETRIES = 3;
 
+  console.log("this is skinanalysis ...")
   const performAnalysis = async () => {
     if (!imageUrl || !userId) {
       setError('Missing required information');
@@ -38,6 +39,7 @@ export function SkinAnalysis({ imageUrl, userId, onAnalysisComplete }: SkinAnaly
 
       setAnalysis(results);
       onAnalysisComplete?.(results);
+
     } catch (err) {
       let errorMessage: string;
       

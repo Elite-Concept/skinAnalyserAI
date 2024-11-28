@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import type { AnalysisResult } from '../components/SkinAnalysis/types';
 
+
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 if (!API_KEY) {
@@ -52,6 +53,7 @@ export async function analyzeSkinImage(imageUrl: string): Promise<AnalysisResult
 
     const analysis = JSON.parse(jsonMatch[0]);
     validateAnalysisResult(analysis);
+
 
     return analysis;
   } catch (error) {

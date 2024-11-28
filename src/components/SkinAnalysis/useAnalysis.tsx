@@ -8,10 +8,12 @@ export function useAnalysis(imageUrl: string, userId: string) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+
   useEffect(() => {
     let isMounted = true;
 
     const analyzeSkin = async () => {
+      console.log("start analysis from useAnalysis...");
       if (!imageUrl || !userId) {
         setError('Missing required information');
         setIsLoading(false);
@@ -27,11 +29,14 @@ export function useAnalysis(imageUrl: string, userId: string) {
         if (credits.available <= 0) {
           throw new Error('Insufficient analysis credits');
         }
+        console.info("got the credidts: ",credits );
 
         const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
         if (!apiKey) {
           throw new Error('API key not configured');
         }
+
+        console.info("checking apiKey: ", apiKey);
 
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
@@ -42,6 +47,7 @@ export function useAnalysis(imageUrl: string, userId: string) {
           throw new Error('Failed to load image');
         }
 
+        console.log("getting the image formate: ", response);
         const blob = await response.blob();
         const reader = new FileReader();
         
@@ -63,6 +69,7 @@ export function useAnalysis(imageUrl: string, userId: string) {
         }
         Base the analysis only on visible features. Return valid JSON only.`;
 
+        console.log("sending the prompt: ", prompt);
         const result = await model.generateContent([
           {
             inlineData: {
@@ -73,12 +80,14 @@ export function useAnalysis(imageUrl: string, userId: string) {
           { text: prompt }
         ]);
 
+        console.log("received the prompt bakc: ", result);
         if (!result.response) {
           throw new Error('No response from AI model');
         }
 
+
         const response_text = result.response.text();
-        
+        console.log("respoisne text: ", response_text);
         // Extract and validate JSON
         const jsonMatch = response_text.match(/\{[\s\S]*\}/);
         if (!jsonMatch) {
@@ -86,6 +95,7 @@ export function useAnalysis(imageUrl: string, userId: string) {
         }
 
         const analysisResult = JSON.parse(jsonMatch[0]);
+        console.log("analysis restil: ", analysisResult);
 
         // Validate response structure
         if (!analysisResult.skinType || !analysisResult.concerns || !analysisResult.recommendations) {
@@ -94,7 +104,7 @@ export function useAnalysis(imageUrl: string, userId: string) {
 
         // Increment analysis count after successful analysis
         await incrementAnalysisCount(userId);
-
+        console.log("increamented the count:", incrementAnalysisCount);
         if (isMounted) {
           setAnalysis(analysisResult);
           setError(null);

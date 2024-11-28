@@ -82,11 +82,12 @@ export default function EmbedWidget() {
   };
 
   const handleLeadSubmit = async (data: LeadData) => {
-    console.log(data);
+
     if (!credits || credits.available <= 0) {
       setError('Insufficient analysis credits');
       return;
     }
+
 
     setIsSubmitting(true);
     try {
@@ -99,6 +100,7 @@ export default function EmbedWidget() {
     } finally {
       setIsSubmitting(false);
     }
+
   };
 
   if (isLoading) {
@@ -141,7 +143,7 @@ export default function EmbedWidget() {
           <div className="h-full">
             <CameraCapture onImageCapture={handleImageCapture} />
           </div>
-        ) : capturedImage && !leadSubmitted ? (
+        ) : capturedImage && !leadSubmitted && analysisResults ? (
           <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-6 m-4">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Complete Your Analysis

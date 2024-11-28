@@ -74,6 +74,7 @@ export async function sendWebhook(
     const startTime = Date.now();
 
     try {
+      console.info("sending webhook: ", webhookUrl)
       const response = await fetch(webhookUrl.toString(), {
         method: 'POST',
         headers: {

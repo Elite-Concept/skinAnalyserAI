@@ -7,6 +7,7 @@ interface AnalysisResultsProps {
 }
 
 export function AnalysisResults({ analysis }: AnalysisResultsProps) {
+  
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
       <div className="p-6 space-y-6">
