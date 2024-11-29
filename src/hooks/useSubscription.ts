@@ -13,7 +13,7 @@ interface Subscription {
 }
 
 interface UseSubscriptionReturn {
-  subscribe: (planId: string, userId: string) => Promise<void>;
+  subscribe: (planId: string, userId: string, userEmail: string) => Promise<void>;
   isLoading: boolean;
   error: string | null;
   clearError: () => void;
@@ -23,16 +23,16 @@ interface UseSubscriptionReturn {
   daysRemaining: number;
 }
 
-export function useSubscription(userId?: string, planId?: string): UseSubscriptionReturn {
-  console.log("this is use subscription: ", userId, planId)
+export function useSubscription(): UseSubscriptionReturn {
+  
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [subscription] = useState<Subscription | null>(null);
 
 
   
-  const subscribe = async (planId: string, userId: string) => {
-    if (!planId || !userId) {
+  const subscribe = async (planId: string, userId: string, userEmail: string) => {
+    if (!planId || !userId || !userEmail) {
       setError('Missing required subscription information');
       return;
     }
@@ -47,7 +47,8 @@ export function useSubscription(userId?: string, planId?: string): UseSubscripti
           throw new Error(response.error || 'Failed to activate trial subscription');
         }
       } else {
-        await createCheckoutSession(planId, userId);
+    
+        await createCheckoutSession(planId, userId, userEmail);
       }
     } catch (err) {
       const errorMessage = err instanceof Error 

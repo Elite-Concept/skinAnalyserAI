@@ -8,17 +8,21 @@ interface UpgradeModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentPlan?: string;
+  user?:any
 }
 
-export default function UpgradeModal({ isOpen, onClose, currentPlan }: UpgradeModalProps) {
+export default function UpgradeModal({ isOpen, onClose, currentPlan, user }: UpgradeModalProps) {
   const { subscribe, isLoading, error } = useSubscription();
   const availablePlans = plans.filter(plan => !plan.isTrial && plan.id !== currentPlan);
+
+
 
   if (!isOpen) return null;
 
   const handleUpgrade = async (plan: PlanDetails) => {
     try {
-      await subscribe(plan.id, currentPlan || '');
+      console.log("user: email ", user.email)
+      await subscribe(plan.id, currentPlan || '', user.email);
       // Modal will be closed after redirect to Stripe
     } catch (error) {
       // Error is handled by useSubscription hook

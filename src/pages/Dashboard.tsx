@@ -148,6 +148,7 @@ export default function Dashboard() {
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
         currentPlan={user?.uid}
+        user={user}
       />
     </div>
   );

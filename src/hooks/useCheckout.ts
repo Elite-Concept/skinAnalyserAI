@@ -13,6 +13,7 @@ export function useCheckout(): UseCheckoutReturn {
   const [error, setError] = useState<string | null>(null);
 
   const initiateCheckout = async (priceId: string, userId: string) => {
+    
     if (!priceId || !userId) {
       const error = 'Missing required checkout information';
       setError(error);
@@ -23,7 +24,10 @@ export function useCheckout(): UseCheckoutReturn {
       setIsLoading(true);
       setError(null);
 
-      await createCheckoutSession(priceId, userId);
+      // an email required to create or to buy a plan.
+      const userEmail = '';
+
+      await createCheckoutSession(priceId, userId, userEmail );
     } catch (err) {
       let errorMessage = 'Failed to initiate checkout';
       

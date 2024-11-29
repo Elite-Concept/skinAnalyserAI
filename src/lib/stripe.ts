@@ -67,10 +67,14 @@ export const plans: PlanDetails[] = [
   }
 ];
 
-export async function createCheckoutSession(priceId: string, userId: string): Promise<void> {
-  if (!priceId || !userId) {
+export async function createCheckoutSession(priceId: string, userId: string, userEmail: string): Promise<void> {
+  if (!priceId || !userId ) {
     throw new Error('Missing required parameters for checkout');
   }
+
+  console.log("stripe: user email address: ", userEmail);
+  console.log("stripe: user id: ", userId);
+  console.log("stripe: price id ", priceId);
 
   try {
     const response = await fetch('/.netlify/functions/create-checkout-session', {
@@ -80,7 +84,8 @@ export async function createCheckoutSession(priceId: string, userId: string): Pr
       },
       body: JSON.stringify({
         priceId,
-        userId,
+        userId,  /** this has to be user mail */
+        userEmail,
         successUrl: `${window.location.origin}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
         cancelUrl: `${window.location.origin}/pricing`,
       }),

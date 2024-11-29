@@ -39,8 +39,9 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    const { priceId, userId, successUrl, cancelUrl } = JSON.parse(event.body);
-
+    const { priceId, userId, userEmail, successUrl, cancelUrl } = JSON.parse(event.body);
+    console.table( userId, userEmail)
+    
     if (!priceId || !userId || !successUrl || !cancelUrl) {
       return {
         statusCode: 400,
@@ -52,7 +53,7 @@ export const handler: Handler = async (event) => {
     // Create or retrieve customer
     let customer;
     const customers = await stripe.customers.list({
-      email: userId,
+      email: userEmail,
       limit: 1,
     });
 
@@ -60,7 +61,7 @@ export const handler: Handler = async (event) => {
       customer = customers.data[0];
     } else {
       customer = await stripe.customers.create({
-        email: userId,
+        email: userEmail,
         metadata: { userId },
       });
     }
