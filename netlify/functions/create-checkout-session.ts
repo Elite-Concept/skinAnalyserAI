@@ -40,8 +40,8 @@ export const handler: Handler = async (event) => {
     }
 
     const { priceId, userId, userEmail, successUrl, cancelUrl } = JSON.parse(event.body);
-    console.table( userId, userEmail)
-    
+    console.log( userId, userEmail)
+
     if (!priceId || !userId || !successUrl || !cancelUrl) {
       return {
         statusCode: 400,
