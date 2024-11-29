@@ -5,8 +5,8 @@ interface SubscriptionStatusProps {
   userId: string;
 }
 
-export default function SubscriptionStatus({ userId }: SubscriptionStatusProps) {
-  const { subscription, isLoading, error, isActive, remainingAnalyses, daysRemaining } = useSubscription(userId);
+export default function SubscriptionStatus({ }: SubscriptionStatusProps) {
+  const { subscription, isLoading, error, isActive, remainingAnalyses, daysRemaining } = useSubscription();
 
   if (isLoading) {
     return (

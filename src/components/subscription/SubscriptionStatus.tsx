@@ -8,7 +8,8 @@ interface SubscriptionStatusProps {
 }
 
 export default function SubscriptionStatus({ userId, onUpgrade }: SubscriptionStatusProps) {
-  const { subscription, isLoading, error } = useSubscription(userId);
+  console.log(userId)
+  const { subscription, isLoading, error } = useSubscription();
 
   if (isLoading) {
     return (

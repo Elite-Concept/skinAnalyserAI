@@ -7,7 +7,8 @@ interface SubscriptionBannerProps {
 }
 
 export default function SubscriptionBanner({ userId, onUpgrade }: SubscriptionBannerProps) {
-  const { subscription, isLoading, error } = useSubscription(userId);
+  console.log(userId)
+  const { subscription, isLoading, error } = useSubscription();
 
   if (isLoading || error || !subscription) return null;
 
